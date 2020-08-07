@@ -2,6 +2,9 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Marker } from '../models/marker.model';
 import { Geolocation} from '@capacitor/core';
+import { Observable } from 'rxjs';
+import { Spot } from '../models/spot.model';
+import { FirestoreService } from '../services/firestore.service';
 
 @Component({
   selector: 'app-main-view',
@@ -14,10 +17,28 @@ export class MainViewComponent implements OnInit {
 
   public map: any;
   private initialPosition: Marker;
-  constructor() { }
+  private spotsList: Observable<Spot[]>;
+  constructor(private firestoreService: FirestoreService) { }
 
   ngOnInit() {
     this.getLocation();
+    this.loadSpots();
+  }
+
+  private loadSpots() {
+    this.spotsList = this.firestoreService.getSpotList().valueChanges();
+    this.spotsList.subscribe((spots: Spot[]) => {
+      spots.forEach(spot => {
+        const newMarker: Marker = {
+          position : {
+            lat: spot.latitude,
+            lng: spot.longitude
+          },
+          title: spot.name
+        };
+        this.addMarker(newMarker);
+      });
+    })
   }
 
   private async getLocation() {
