@@ -1,0 +1,54 @@
+<form [formGroup]="spotForm" (submit)="submitSpot()">
+    <ion-item>
+      <ion-label stacked>Spot Name</ion-label>
+      <ion-input
+        formControlName="name"
+        type="text"
+        placeholder="Nombre del Point"
+      >
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Description</ion-label>
+      <ion-textarea
+        formControlName="description"
+        type="text"
+        placeholder="Algo a destacar del Point"
+      >
+      </ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Longitude</ion-label>
+      <ion-input
+        formControlName="longitude"
+        type="number"
+      >
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Latitude</ion-label>
+        <ion-input
+          formControlName="latitude"
+          type="number"
+        >
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Tipo de Spot</ion-label>
+      <ion-select placeholder="Select One" interface="popover" formControlName="type">
+        <ion-select-option value="spot">Spot</ion-select-option>
+        <ion-select-option value="escuela">Escuela</ion-select-option>
+        <ion-select-option value="surfcamp">Surfcamp</ion-select-option>
+        <ion-select-option value="tienda">Tienda</ion-select-option>
+        <ion-select-option value="alquileres">Alquileres</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-button expand="block" type="submit" [disabled]="!spotForm.valid">
+      Guardar Spot
+    </ion-button>
+  </form>

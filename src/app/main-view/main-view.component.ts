@@ -18,6 +18,7 @@ export class MainViewComponent implements OnInit {
   public map: any;
   private initialPosition: Marker;
   private spotsList: Observable<Spot[]>;
+  
   constructor(private firestoreService: FirestoreService) { }
 
   ngOnInit() {

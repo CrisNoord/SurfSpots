@@ -11,4 +11,20 @@ export class FirestoreService {
     public getSpotList(): AngularFirestoreCollection<Spot> {
         return this.angularFirestore.collection(`spots`);
       }
+
+    public createSpot(
+        data: Spot
+      ): Promise<void> {
+        const id = this.angularFirestore.createId();
+      
+        return this.angularFirestore.doc(`spots/${id}`).set({
+          id,
+          name: data.name,
+          description: data.description,
+          latitude: data.latitude,
+          longitude: data.longitude,
+          type: data.type
+        });
+    }
 }
+
