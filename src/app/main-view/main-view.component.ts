@@ -1,7 +1,8 @@
 /// <reference types="@types/googlemaps" />
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Plugins } from '@capacitor/core';
+const { Geolocation } = Plugins;
 import { Marker } from '../models/marker.model';
-import { Geolocation} from '@capacitor/core';
 import { Observable } from 'rxjs';
 import { Spot } from '../models/spot.model';
 import { FirestoreService } from '../services/firestore.service';
