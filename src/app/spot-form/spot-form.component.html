@@ -1,4 +1,4 @@
-<form [formGroup]="spotForm" (submit)="submitSpot()">
+<form *ngIf="!showLocationPicker" [formGroup]="spotForm" (submit)="takeValues()">
     <ion-item>
       <ion-label stacked>Spot Name</ion-label>
       <ion-input
@@ -19,23 +19,6 @@
       </ion-textarea>
     </ion-item>
 
-    <ion-item>
-      <ion-label stacked>Longitude</ion-label>
-      <ion-input
-        formControlName="longitude"
-        type="number"
-      >
-      </ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label stacked>Latitude</ion-label>
-        <ion-input
-          formControlName="latitude"
-          type="number"
-        >
-      </ion-input>
-    </ion-item>
 
     <ion-item>
       <ion-label stacked>Tipo de Spot</ion-label>
@@ -49,6 +32,10 @@
     </ion-item>
 
     <ion-button expand="block" type="submit" [disabled]="!spotForm.valid">
-      Guardar Spot
+      Select Location
     </ion-button>
   </form>
+  <div [hidden]="!showLocationPicker" id="location-picker" class="location-picker-container"></div>
+  <ion-button *ngIf="showLocationPicker" expand="block" (click)="submitSpot()">
+    Save Point!
+  </ion-button>

@@ -1,3 +1,4 @@
+import LocationPicker from "location-picker";
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LoadingController, AlertController } from '@ionic/angular';
@@ -12,7 +13,10 @@ import { Spot } from '../models/spot.model';
     styleUrls: ['./spot-form.component.scss'],
   })
   export class SpotFormComponent implements OnInit {
-    private spotForm: FormGroup
+    private spotForm: FormGroup;
+    public showLocationPicker: boolean = false;
+    public locationPicker: LocationPicker;
+
 
     constructor(private loadingCtrl: LoadingController,
         private alertCtrl: AlertController,
@@ -22,23 +26,25 @@ import { Spot } from '../models/spot.model';
           this.spotForm = this.formBuilder.group({
             name: ['', Validators.required],
             description: ['', Validators.required],
-            latitude: [0, Validators.required],
-            longitude: [0, Validators.required],
             type: ['', Validators.required]
             });
         }
 
     ngOnInit() {
-      
-    } 
+    }
+
+    public takeValues() {
+        this.showLocationPicker = true;
+        this.locationPicker = new LocationPicker('location-picker');
+    }
 
     public async submitSpot() {
         const loading = await this.loadingCtrl.create();
-      
+        let {lat, lng} = this.locationPicker.getMarkerPosition()
         const name = this.spotForm.value.name;
         const description = this.spotForm.value.description;
-        const latitude = this.spotForm.value.latitude;
-        const longitude = this.spotForm.value.longitude;
+        const latitude = lat;
+        const longitude = lng;
         const type = this.spotForm.value.type;
         const body: Spot = {
             name,
@@ -55,11 +61,10 @@ import { Spot } from '../models/spot.model';
             this.spotForm = this.formBuilder.group({
                 name: ['', Validators.required],
                 description: ['', Validators.required],
-                latitude: [0, Validators.required],
-                longitude: [0, Validators.required],
                 type: ['', Validators.required]
                 });
             loading.dismiss().then(() => {
+            this.showLocationPicker = false;
             this.router.navigateByUrl('');
             });
         },
