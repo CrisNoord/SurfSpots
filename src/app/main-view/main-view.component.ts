@@ -22,8 +22,8 @@ export class MainViewComponent implements OnInit {
   
   constructor(private firestoreService: FirestoreService) { }
 
-  ngOnInit() {
-    this.getLocation();
+  async ngOnInit() {
+    await this.getLocation();
     this.loadSpots();
   }
 
